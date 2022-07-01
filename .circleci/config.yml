@@ -1,26 +1,51 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-
+orbs:
+  gh: circleci/github-cli@2.1.0
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+  test:
+    macos:
+      xcode: 13.4.1
+    working_directory: ~/workspace
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Install dependencies"
+          command: ".circleci/install-dependencies.sh"
+      - run:
+          name: "Lint"
+          command: "./script/lint"
+      - run:
+          name: "Build"
+          command: "make"
+  package:
+    macos:
+      xcode: 13.4.1
+    working_directory: ~/workspace
+    steps:
+      - checkout
+      - run:
+        name: "Package"
+        command: "./script/archive --package"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  master-workflow:
     jobs:
-      - say-hello
+      - test
+      - gh/release:
+          context:
+            - GITHUB_CREDS
+          filters:
+            tags:
+              only: /^test.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - test
+          tag: $CIRCLE_TAG
+          title: "Release: $CIRCLE_TAG"
