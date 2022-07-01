@@ -15,8 +15,8 @@ build_release_target() {
         -Xswiftc -Osize ${DISABLE_SANDBOX:+--disable-sandbox}
 
     mkdir -p "$ARCHIVE_DIR"
-    cp .build/apple/Products/Release/zero "$ARCHIVE_DIR"
-    strip "$ARCHIVE_DIR/zero"
+    cp .build/apple/Products/Release/nidi "$ARCHIVE_DIR"
+    strip "$ARCHIVE_DIR/nidi"
     set +x
 
     echo "Successfully built target."
@@ -31,12 +31,12 @@ generate_completions() {
 package() (
     echo "Preparing new package..."
 
-    version="$("$ARCHIVE_DIR"/zero --version | sed 's/^Version: //')"
-    package_name="zero-$version"
+    version="$("$ARCHIVE_DIR"/nidi --version | sed 's/^Version: //')"
+    package_name="nidi-$version"
     package_dir="$ARCHIVE_DIR/$package_name"
 
     mkdir -p "$package_dir"
-    cp "archive/zero" "$package_dir/"
+    cp "archive/nidi" "$package_dir/"
     cp CHANGELOG.md README.md LICENSE "$package_dir/"
     cp -R "$ARCHIVE_DIR/complete" "$package_dir/"
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Radically simple personal bootstrapping tool for macOS.
-# https://github.com/zero-sh/zero.sh
+# https://github.com/nidi-sh/nidi.sh
 set -o errexit -o nounset
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -15,9 +15,9 @@ fi
 eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 
 export PATH="/usr/local/bin:$PATH"
-if ! command -v zero >/dev/null; then
-    echo "Installing Zero..."
-    brew install zero-sh/tap/zero
+if ! command -v nidi >/dev/null; then
+    echo "Installing Usanidi..."
+    brew install usanidi/tap/nidi
 fi
 
-zero setup "$@" --directory "$SCRIPT_DIR/.."
+nidi setup "$@" --directory "$SCRIPT_DIR/.."

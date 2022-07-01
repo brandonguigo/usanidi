@@ -12,7 +12,7 @@ final class BundleCommand: Command {
     var removeNotPresent: Bool
     
     func execute() throws {
-        let runner = try ZeroRunner(
+        let runner = try NidiRunner(
             configDirectory: self.configDirectory,
             workspace: self.workspace ?? [],
             verbose: self.verbose,
@@ -22,7 +22,7 @@ final class BundleCommand: Command {
     }
 }
 
-extension ZeroRunner {
+extension NidiRunner {
     /// Run `brew bundle` in the given directory, if Brewfile exists.
     func bundle(directory: Path) throws {
         if !directory.join("Brewfile").exists {

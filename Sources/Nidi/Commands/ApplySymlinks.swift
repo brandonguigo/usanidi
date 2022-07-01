@@ -9,7 +9,7 @@ final class ApplySymlinksCommand: Command {
     @Key("-d", "--directory") var configDirectory: Path?
 
     final func execute() throws {
-        let runner = try ZeroRunner(
+        let runner = try NidiRunner(
             configDirectory: self.configDirectory,
             workspace: self.workspace ?? [],
             verbose: self.verbose
@@ -18,7 +18,7 @@ final class ApplySymlinksCommand: Command {
     }
 }
 
-extension ZeroRunner {
+extension NidiRunner {
     /// Applies symlinks contained in `symlinks` folder in the given directory.
     func applySymlinks(directory: Path) throws {
         let symlinkDirectory = directory.join("symlinks")

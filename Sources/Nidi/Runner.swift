@@ -5,7 +5,7 @@ import SwiftCLI
 /// Name of workspace to parse, with children separated by ".".
 typealias Workspace = [String]
 
-enum ZeroValidationError: LocalizedError {
+enum NidiValidationError: LocalizedError {
     /// Found a `./workspaces` directory in configuration path, but `workspace`
     /// parameter was not passed.
     case missingWorkspace
@@ -29,7 +29,7 @@ enum ZeroValidationError: LocalizedError {
     }
 }
 
-struct ZeroRunner {
+struct NidiRunner {
     let configDirectory: Path
     let workspace: Workspace
     let verbose: Bool
@@ -37,8 +37,8 @@ struct ZeroRunner {
 
     init(configDirectory: Path? = nil, workspace: Workspace, verbose: Bool, removeNotPresent: Bool = false) throws {
         let fallbackDirectories: [Path] = [
-            Path.XDG.configHome.join("zero").join("dotfiles"),
-            Path.home.join(".dotfiles"),
+            Path.XDG.configHome.join("usanidi").join("config"),
+            Path.home.join(".usanidi"),
         ]
         self.configDirectory = configDirectory ?? fallbackDirectories.first { $0.isDirectory } ??
             fallbackDirectories.last!
@@ -159,15 +159,15 @@ struct ZeroRunner {
     }
 }
 
-private extension ZeroRunner {
+private extension NidiRunner {
     /// Validates runner before use. Ensures given configDirectory and
     /// workspace are valid and exist on disk.
     func validate() throws {
         if !self.configDirectory.isDirectory {
-            throw ZeroValidationError.invalidDirectory(self.configDirectory)
+            throw NidiValidationError.invalidDirectory(self.configDirectory)
         }
         if self.workspace.isEmpty, self.configDirectory.join("workspaces").exists {
-            throw ZeroValidationError.missingWorkspace
+            throw NidiValidationError.missingWorkspace
         }
 
         // Absolute path to each component of the workspace. For example, the
@@ -179,12 +179,12 @@ private extension ZeroRunner {
         }
 
         if let missingDirectory = componentDirectories.first(where: { !$0.isDirectory }) {
-            throw ZeroValidationError.invalidDirectory(missingDirectory)
+            throw NidiValidationError.invalidDirectory(missingDirectory)
         }
         // swiftformat:disable braces wrapMultilineStatementBraces
         if let lastDirectory = componentDirectories.last,
            lastDirectory.join("workspaces").isDirectory {
-            throw ZeroValidationError.workspaceIsParent
+            throw NidiValidationError.workspaceIsParent
         }
     }
 

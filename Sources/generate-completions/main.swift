@@ -5,7 +5,7 @@
 import Foundation
 import Path
 import SwiftCLI
-import Zero
+import Nidi
 
 guard let outDirectoryParameter = ProcessInfo.processInfo.environment["OUT_DIR"] else {
     Term.stderr <<< "OUT_DIR environment variable not set; aborting."
@@ -19,6 +19,6 @@ guard let outStream = WriteStream.for(path: completionsPath.string, appending: f
     exit(1)
 }
 
-let generator = ZshCompletionGenerator(cli: Zero.cli)
+let generator = ZshCompletionGenerator(cli: Nidi.cli)
 generator.writeCompletions(into: outStream)
 Term.stdout <<< "Successfully generated zsh completions."

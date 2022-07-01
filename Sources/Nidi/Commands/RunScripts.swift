@@ -9,7 +9,7 @@ final class RunScriptsCommand: Command {
     @Key("-d", "--directory") var configDirectory: Path?
 
     func execute() throws {
-        let runner = try ZeroRunner(
+        let runner = try NidiRunner(
             configDirectory: self.configDirectory,
             workspace: self.workspace ?? [],
             verbose: self.verbose
@@ -26,7 +26,7 @@ enum ZeroScriptSuffix: String {
     case after
 }
 
-extension ZeroRunner {
+extension NidiRunner {
     /// Run scripts in the given directory, contained in `run/{suffix}`.
     func runScripts(directory: Path, suffix: ZeroScriptSuffix) throws {
         Term.stdout <<< TTY.progressMessage("Running scripts in run/\(suffix.rawValue)")
