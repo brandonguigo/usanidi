@@ -277,6 +277,13 @@ few ways you can help:
 - Suggest or add new features.
 - Star this repository so it can be added to upstream Homebrew.
 
+### Setup
+
+```bash
+git clone https://github.com/brandonguigo/usanidi.git usanidi
+yarn #to install the prehooks for commit messages and pre-commit lint
+```
+
 ## Inspiration
 
 This is partly inspired by [@gerhard's setup][1], in addition to [this blog

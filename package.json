@@ -6,8 +6,9 @@
   "repository": "https://github.com/brandonguigo/usanidi.git",
   "author": "Brandon Guigo <bguigo@gmail.com>",
   "license": "MIT",
-  
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "husky": "^8.0.1"
   },
   "scripts": {
