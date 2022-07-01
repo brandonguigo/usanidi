@@ -35,7 +35,12 @@ struct NidiRunner {
     let verbose: Bool
     let removeNotPresent: Bool
 
-    init(configDirectory: Path? = nil, workspace: Workspace, verbose: Bool, removeNotPresent: Bool = false) throws {
+    init(
+        configDirectory: Path? = nil,
+        workspace: Workspace,
+        verbose: Bool,
+        removeNotPresent: Bool = false
+    ) throws {
         let fallbackDirectories: [Path] = [
             Path.XDG.configHome.join("usanidi").join("config"),
             Path.home.join(".usanidi"),

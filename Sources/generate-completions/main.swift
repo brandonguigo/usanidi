@@ -3,9 +3,9 @@
 //
 
 import Foundation
+import Nidi
 import Path
 import SwiftCLI
-import Nidi
 
 guard let outDirectoryParameter = ProcessInfo.processInfo.environment["OUT_DIR"] else {
     Term.stderr <<< "OUT_DIR environment variable not set; aborting."
