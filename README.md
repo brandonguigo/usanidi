@@ -32,9 +32,9 @@ command line utilities re-installed (and configurations restored).
 **Note**: By default, `nidi` assumes your configuration directory is located in
 one of following locations. This can be changed with the `--directory` flag.
 
-1. `$XDG_CONFIG_HOME/usanidi`
-2. `$HOME/.config/usanidi`
-3. `$HOME/.usanidi`
+1. `$XDG_CONFIG_HOME/usanidi/config`
+2. `$HOME/.config/usanidi/config`
+3. `$HOME/.usanidi/config`
 
 ## 
 

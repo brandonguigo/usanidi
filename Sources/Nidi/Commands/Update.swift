@@ -9,11 +9,11 @@ final class UpdateCommand: Command {
     var updateAll: Bool
 
     func execute() throws {
-        try ZeroRunner.update(verbose: self.verbose, updateAll: self.updateAll)
+        try NidiRunner.update(verbose: self.verbose, updateAll: self.updateAll)
     }
 }
 
-extension ZeroRunner {
+extension NidiRunner {
     /// Check and apply all system and application updates via
     /// `softwareupdate`, `brew` and `mas`.
     static func update(verbose: Bool, updateAll: Bool) throws {
@@ -23,13 +23,13 @@ extension ZeroRunner {
     }
 }
 
-private extension ZeroRunner {
+private extension NidiRunner {
     /// Check and apply system updates via `softwareupdate` CLI.
     static func systemUpdate(verbose: Bool) throws {
         Term.stdout <<< TTY.progressMessage("Checking for system updates...")
 
         let verboseFlags: [String] = verbose ? ["--verbose"] : []
-        let result = try ZeroRunner.captureTask(
+        let result = try NidiRunner.captureTask(
             "/usr/sbin/softwareupdate",
             arguments: ["--list"] + verboseFlags,
             tee: Term.stdout,
@@ -52,7 +52,7 @@ private extension ZeroRunner {
 
         let prompt = "Install system updates? This will restart your machine if necessary."
         if Input.confirm(prompt: prompt, defaultValue: true) {
-            try ZeroRunner.spawnTask("/usr/bin/sudo", arguments: [
+            try NidiRunner.spawnTask("/usr/bin/sudo", arguments: [
                 "--",
                 "/usr/sbin/softwareupdate",
                 "--install",
@@ -69,11 +69,11 @@ private extension ZeroRunner {
     /// Check and apply brew and brew cask updates.
     static func brewUpdate(verbose: Bool, updateAll: Bool) throws {
         let verboseFlags: [String] = verbose ? ["--verbose"] : []
-        try ZeroRunner.runTask("brew", arguments: ["update"] + verboseFlags)
-        try ZeroRunner.spawnTask("brew", arguments: ["upgrade"] + verboseFlags)
+        try NidiRunner.runTask("brew", arguments: ["update"] + verboseFlags)
+        try NidiRunner.spawnTask("brew", arguments: ["upgrade"] + verboseFlags)
 
         if updateAll {
-            try ZeroRunner.spawnShell(
+            try NidiRunner.spawnShell(
                 "brew outdated --cask --greedy --verbose | " +
                     "grep -Fv '(latest)' | " +
                     "awk '{print \"homebrew/cask/\" $1}' | " +
@@ -85,6 +85,6 @@ private extension ZeroRunner {
     /// Check and apply app store updates.
     static func appStoreUpdate() throws {
         Term.stdout <<< TTY.progressMessage("Upgrading apps from the App Store...")
-        try ZeroRunner.runTask("mas", "upgrade")
+        try NidiRunner.runTask("mas", "upgrade")
     }
 }

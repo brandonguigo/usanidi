@@ -15,18 +15,18 @@ final class SetupCommand: Command {
     var removeNotPresent: Bool
 
     func execute() throws {
-        let runner = try ZeroRunner(
+        let runner = try NidiRunner(
             configDirectory: self.configDirectory,
             workspace: self.workspace ?? [],
             verbose: self.verbose,
             removeNotPresent: self.removeNotPresent
         )
-        try ZeroRunner.update(verbose: self.verbose, updateAll: self.updateAll)
+        try NidiRunner.update(verbose: self.verbose, updateAll: self.updateAll)
         try runner.workspaceDirectories.forEach(runner.setup)
     }
 }
 
-extension ZeroRunner {
+extension NidiRunner {
     /// Returns all directories matching the receiver's workspace, i.e. all
     /// parent and sibling shared directories and the named tail directory. For
     /// example, in the following directory structure:
@@ -59,7 +59,7 @@ extension ZeroRunner {
     }
 }
 
-private extension ZeroRunner {
+private extension NidiRunner {
     /// Run setup commands in the given directory.
     func setup(directory: Path) throws {
         if directory != configDirectory {

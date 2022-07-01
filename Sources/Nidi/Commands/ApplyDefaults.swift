@@ -9,7 +9,7 @@ final class ApplyDefaultsCommand: Command {
     @Key("-d", "--directory") var configDirectory: Path?
 
     func execute() throws {
-        let runner = try ZeroRunner(
+        let runner = try NidiRunner(
             configDirectory: self.configDirectory,
             workspace: self.workspace ?? [],
             verbose: self.verbose
@@ -18,7 +18,7 @@ final class ApplyDefaultsCommand: Command {
     }
 }
 
-extension ZeroRunner {
+extension NidiRunner {
     /// Runs `apply-user-defaults` for the defaults file in the given directory.
     func applyDefaults(directory: Path) throws {
         guard directory.join("defaults.yaml").exists else {
