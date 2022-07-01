@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/usanidi/usanidi/master?style=flat-square)][CI]
+[![CircleCI](https://circleci.com/gh/brandonguigo/usanidi.svg?style=svg)][CI]
 [![Latest Release](https://img.shields.io/github/v/release/usanidi/usanidi?sort=semver&style=flat-square)][Release]
 
 [CI]: https://travis-ci.org/usanidi/usanidi
