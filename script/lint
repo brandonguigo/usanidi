@@ -7,7 +7,7 @@ main() (
     cd "$SCRIPT_DIR/.."
 
     # Workaround for https://github.com/mvdan/sh/issues/288.
-    files="$(shfmt -f . | grep -v "^\.")"
+    files="$(shfmt -f . | grep -v "^\." | grep -v "node_modules/husky/husky.sh")"
 
     echo "Running shellcheck..."
     echo "$files" | while read -r fname; do
