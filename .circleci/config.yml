@@ -14,13 +14,13 @@ jobs:
       - checkout
       - run:
           name: "Install dependencies"
-          command: ".circleci/install-dependencies.sh"
+          command: "yarn"
       - run:
           name: "Lint"
-          command: "./script/lint"
+          command: "yarn lint"
       - run:
           name: "Build"
-          command: "make"
+          command: "yarn build"
   package:
     macos:
       xcode: 13.4.1
@@ -29,7 +29,7 @@ jobs:
       - checkout
       - run:
           name: "Package"
-          command: "./script/archive --package"
+          command: "yarn archive"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows

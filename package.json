@@ -9,9 +9,21 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
+    "cross-os": "^1.5.0",
     "husky": "^8.0.1"
   },
+  "cross-os": {
+      "install-os-dependencies": {
+          "darwin": "./.circleci/install-dependencies-darwin.sh"
+      }
+  },
   "scripts": {
-    "postinstall": "husky install"
+    "postinstall": "husky install && echo Installing OS specific dependencies: && cross-os install-os-dependencies",
+    "build": "swift build --arch arm64 --arch x86_64",
+    "lint": "./script/lint",
+    "archive": "./script/archive",
+    "localInstall": "swift build --arch arm64 --arch x86_64 && cp ./archive/nidi /usr/local/bin/nidi",
+    "uninstall": "rm -f /usr/local/bin/nidi",
+    "clean": "rm -rf archive && swift package clean"
   }
 }
