@@ -34,18 +34,20 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  master-workflow:
+  default-workflow:
+    jobs:
+      - test
+  release-workflow:
+    when:
+      and:
+        - equal: [ /^test.*/, << pipeline.git.tag >>]
     jobs:
       - test
       - gh/release:
           context:
             - GITHUB_CREDS
-          filters:
-            tags:
-              only: /^test.*/
-            branches:
-              ignore: /.*/
           requires:
             - test
           tag: $CIRCLE_TAG
           title: "Release: $CIRCLE_TAG"
+
