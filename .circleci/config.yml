@@ -43,6 +43,8 @@ workflows:
           filters:
             tags:
               only: /.*/
+            branches:
+              ignore: /.*/
       - gh/release:
           context:
             - GITHUB_CREDS
@@ -53,6 +55,7 @@ workflows:
               only: /^v\d+\.\d+\.\d+/
             branches:
               ignore: /.*/
-          tag: $CIRCLE_TAG
+          tag: "$CIRCLE_TAG"
+          files: "archive/*.tar.gz"
           title: "Release: $CIRCLE_TAG"
 
