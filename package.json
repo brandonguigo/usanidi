@@ -1,0 +1,17 @@
+{
+  "name": "usanidi",
+  "version": "0.1.0",
+  "description": "MaaC (Mac as a Code) configuration tool for Mac OS.",
+  "main": "index.js",
+  "repository": "https://github.com/brandonguigo/usanidi.git",
+  "author": "Brandon Guigo <bguigo@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "husky": "^8.0.1"
+  },
+  "scripts": {
+    "postinstall": "husky install"
+  }
+}

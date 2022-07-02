@@ -10,8 +10,8 @@ final class SetupCommand: Command {
 
     @Flag("-a", "--all", description: "Update all casks, including those with auto-update enabled.")
     var updateAll: Bool
-    
-    @Flag("-r","--rm", description: "Remove bottles that are not in the Brewfile.")
+
+    @Flag("-r", "--rm", description: "Remove bottles that are not in the Brewfile.")
     var removeNotPresent: Bool
 
     func execute() throws {

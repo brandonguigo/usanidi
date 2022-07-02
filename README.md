@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/usanidi/usanidi/master?style=flat-square)][CI]
+[![CircleCI](https://circleci.com/gh/brandonguigo/usanidi.svg?style=svg)][CI]
 [![Latest Release](https://img.shields.io/github/v/release/usanidi/usanidi?sort=semver&style=flat-square)][Release]
 
 [CI]: https://travis-ci.org/usanidi/usanidi
@@ -276,6 +276,13 @@ few ways you can help:
 - Write, clarify, or fix documentation.
 - Suggest or add new features.
 - Star this repository so it can be added to upstream Homebrew.
+
+### Setup
+
+```bash
+git clone https://github.com/brandonguigo/usanidi.git usanidi
+yarn #to install the prehooks for commit messages and pre-commit lint
+```
 
 ## Inspiration
 

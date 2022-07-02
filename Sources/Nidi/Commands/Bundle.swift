@@ -7,10 +7,10 @@ final class BundleCommand: Command {
     let shortDescription: String = "Run brew bundle on a workspace"
     @Param var workspace: Workspace?
     @Key("-d", "--directory") var configDirectory: Path?
-    
-    @Flag("-r","--rm", description: "Remove bottles that are not in the Brewfile.")
+
+    @Flag("-r", "--rm", description: "Remove bottles that are not in the Brewfile.")
     var removeNotPresent: Bool
-    
+
     func execute() throws {
         let runner = try NidiRunner(
             configDirectory: self.configDirectory,
@@ -28,9 +28,16 @@ extension NidiRunner {
         if !directory.join("Brewfile").exists {
             Term.stdout <<< "No Brewfile found."
         } else {
-            let verboseFlags: [String] = self.verbose ? ["--verbose"] : []
-            let removeNotPresentFlags: [String] = self.removeNotPresent ? ["--cleanup", "--zap"] : []
-            try Self.runTask("brew", arguments: ["bundle"] + verboseFlags + removeNotPresentFlags, at: directory)
+            let verboseFlags: [String] =
+                self.verbose ? ["--verbose"] : []
+            let removeNotPresentFlags: [String] =
+                self.removeNotPresent ? ["--cleanup", "--zap"] : []
+            try Self.runTask(
+                "brew",
+                arguments: ["bundle"] +
+                    verboseFlags + removeNotPresentFlags,
+                at: directory
+            )
         }
     }
 }
